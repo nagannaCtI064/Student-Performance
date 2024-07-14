@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .class1 {
+        background-color: #f8f9fa;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.5;
+    }
+        .container {
+            margin-top: 50px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .form-control {
+            margin-bottom: 20px;
+        }
+        .form-header {
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .container {
+        margin-top: 50px;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+    
+    </style>
+</head>
+<body>
+    
+<div class="container class1">
+    <h1 class="form-header text-center">Student Performance</h1>
+    <form action="/predict" method="post">
+        <div class="form-group ">
+            <label for="Age" class="form-label">Age</label>
+            <select name="Age" id="Age" class="form-control" required>
+                {% for row in all_data %}
+                    <option value="{{ row['Age'] }}">{{ row['Age'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Gender" class="form-label">Gender</label>
+            <select name="Gender" id="Gender" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['Gender'] }}">{{ row['Gender'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Ethnicity" class="form-label">Ethnicity</label>
+            <select name="Ethnicity" id="Ethnicity" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['Ethnicity'] }}">{{ row['Ethnicity'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ParentalEducation" class="form-label">Parental Education</label>
+            <select name="ParentalEducation" id="ParentalEducation" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['ParentalEducation'] }}">{{ row['ParentalEducation'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="StudyTimeWeekly" class="form-label">Study Time Weekly</label>
+            <select name="StudyTimeWeekly" id="StudyTimeWeekly" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['StudyTimeWeekly'] }}">{{ row['StudyTimeWeekly'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Absences" class="form-label">Absences</label>
+            <select name="Absences" id="Absences" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['Absences'] }}">{{ row['Absences'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="from-group">
+            <label for="Tutoring" class="form-label">Tutoring</label>
+            <select name="Tutoring" id="Tutoring" class="form-control">
+                {% for row in all_data %}
+                <option value="{{ row['Tutoring'] }}">{{ row['Tutoring'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ParentalSupport" class="form-label">Parental Support</label>
+            <select name="ParentalSupport" id="ParentalSupport" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['ParentalSupport'] }}">{{ row['ParentalSupport'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Extracurricular" class="form-label">Extracurricular</label>
+            <select name="Extracurricular" id="Extracurricular" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['Extracurricular'] }}">{{ row['Extracurricular'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Sports" class="form-label">Sports</label>
+            <select name="Sports" id="Sports" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['Sports'] }}">{{ row['Sports'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Music" class="form-label">Music</label>
+            <select name="Music" id="Music" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['Music'] }}">{{ row['Music'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Volunteering" class="form-label">Volunteering</label>
+            <select name="Volunteering" id="Volunteering" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['Volunteering'] }}">{{ row['Volunteering'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="GPA" class="form-label">GPA</label>
+            <select name="GPA" id="GPA" class="form-control">
+                {% for row in all_data %}
+                    <option value="{{ row['GPA'] }}">{{ row['GPA'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-custom">Predict</button>
+    </form>
+    {% if prediction is defined %}
+    <div class="result alert alert-success">
+        Predicted result is: {{ prediction }}
+    </div>
+    {% endif %}
+
+    {% if error is defined %}
+    <div class="result alert alert-danger">
+        Error: {{ error }}
+    </div>
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+</body>
+</html>
